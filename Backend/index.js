@@ -21,6 +21,7 @@ const storage = multer.diskStorage({
     }
 });
 
+
 const upload = multer({
     storage: storage,
     limits: {
@@ -37,12 +38,12 @@ const upload = multer({
 });
 
 app.get('/', (_req, res) => {
-    res.render('index', { title: 'Meme Application main', message: "" });
+    res.render('index', { title: 'Meme Application main', message: "This is the main page of the application" });
 });
 
 app.get('/api', (req, res) => {
-    console.log(req);
-    res.json({ title: 'Meme Application false', message: "Please upload a file" });
+    console.log(req)
+    res.status(200).json({ title: 'Meme Application false', message: "Please upload a file" });
 });
 app.post('/api', upload.single('image'), async (req, res, _next) => {
     try {
@@ -76,7 +77,7 @@ app.post('/api', upload.single('image'), async (req, res, _next) => {
 app.get('/ack/:apiKey',(req,res)=>{
     const {apiKey} = req.params;
     if(apiKey === process.env.API_KEY){
-        res.status(200).json({status:"Sucess",title: 'Meme Application ack', message: "API Key is valid"});
+        res.status(200).json({status:"Success",title: 'Meme Application ack', message: "API Key is valid"});
         console.log(apiKey);
     }else{
         res.status(400).json({status:"fail", message: "API Key is invalid"});
@@ -84,6 +85,7 @@ app.get('/ack/:apiKey',(req,res)=>{
     }
 })
 
+app.use('/random/post',require('./Routes/randomPost.js'))
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
