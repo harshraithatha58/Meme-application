@@ -55,7 +55,8 @@ app.post('/api', upload.single('image'), async (req, res, _next) => {
             throw error;
         }else{
 
-            console.log(req.file);   
+            console.log(req.file);    
+            
             
             let info = new Info({
                 title: req.body.title,
